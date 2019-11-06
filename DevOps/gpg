@@ -1,0 +1,2 @@
+Create new key: gpg2 --full-gen-key
+Decrypt token: gpg2 --decrypt filename.txt.gpg
