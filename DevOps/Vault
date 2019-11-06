@@ -1,0 +1,24 @@
+https://www.vaultproject.io/
+Vault is a tool for securely accessing secrets. A secret is anything that you want to tightly control access to, such as API keys, passwords, or certificates
+
+
+
+If working on multiple environments create aliases:
+
+e.g. 
+
+alias dvault='export VAULT_ADDR=[DEV VAULT HOST ADDRESS] && unset VAULT_TOKEN && vault login -method=ldap username=[USERNAME]'
+alias prvault='export VAULT_ADDR=[PROD VAULT HOST ADDRESS] && unset VAULT_TOKEN && vault login -method=ldap username=[USERNAME]'
+
+List secrets:
+
+vault list [PATH]
+
+Read secrets:
+
+vault read [PATH]
+vault read -field=value [PATH]
+
+Write secrets:
+
+vault write [PATH] value=[SECRET VALUE]
