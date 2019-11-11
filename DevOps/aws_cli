@@ -24,3 +24,12 @@ arn="$(aws rds describe-db-clusters --db-cluster-identifier aurora-${dbname}-${t
 
  
 echo $snapshot
+
+
+
+# Modify instance size example
+
+aws rds modify-db-instance --db-instance-identifier $dbname --allocated-storage 1024 --db-instance-class m5.24xlarge --storage-type io1 --iops 10000 --monitoring-interval 0 --apply-immediately
+aws rds modify-db-instance --db-instance-identifier $dbname --db-instance-class db.r5.2xlarge	--storage-type gp2 --apply-immediately
+
+
