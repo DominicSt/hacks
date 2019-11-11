@@ -1,0 +1,26 @@
+# Restore from snapshot
+
+srcenv={ ENV }
+tgtenv={ ENV }
+dbname={ dbname }
+tgttag={ name tag }
+
+ 
+ 
+aws rds delete-db-instance --db-instance-identifier aurora-${dbname}-${tgttag}-${tgtenv}-1 --skip-final-snapshot
+aws rds delete-db-cluster --db-cluster-identifier aurora-${dbname}-${tgttag}-${tgtenv} --skip-final-snapshot
+ 
+ 
+ 
+snapshot="$(aws rds describe-db-cluster-snapshots --db-cluster-identifier aurora-${dbname}-${srcenv} --query 'DBClusterSnapshots[].DBClusterSnapshotIdentifier' |grep aurora |cut -f2 -d'"' |sort |tail -1)"
+subnet="$(aws rds describe-db-clusters --db-cluster-identifier aurora-${dbname}-${tgtenv} --query 'DBClusters[].DBSubnetGroup' --output text)"
+security="$(aws rds describe-db-clusters --db-cluster-identifier aurora-${dbname}-${tgtenv} --query 'DBClusters[].VpcSecurityGroups[0].VpcSecurityGroupId' --output text)"
+param="$(aws rds describe-db-clusters --db-cluster-identifier aurora-${dbname}-${tgtenv} --query 'DBClusters[].DBClusterParameterGroup' --output text)"
+ 
+aws rds restore-db-cluster-from-snapshot --db-cluster-identifier aurora-${dbname}-${tgttag}-${tgtenv} --snapshot-identifier $snapshot --db-subnet-group-name $subnet --vpc-security-group-ids $security --engine aurora-postgresql --engine-version 10.7 --db-cluster-parameter-group-name $param
+aws rds create-db-instance     --db-cluster-identifier aurora-${dbname}-${tgttag}-${tgtenv} --db-instance-identifier aurora-${dbname}-${tgttag}-${tgtenv}-1 --engine aurora-postgresql --db-instance-class db.r5.12xlarge --availability-zone eu-west-1c
+ 
+arn="$(aws rds describe-db-clusters --db-cluster-identifier aurora-${dbname}-${tgttag}-${tgtenv} --query='DBClusters[].DBClusterArn' --output text)"
+
+ 
+echo $snapshot
