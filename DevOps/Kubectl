@@ -1,1 +1,7 @@
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+# Restart pod
+# Restart by deleting pod
+
+kubectl delete pods <pod> 
+kubectl delete pods <pod> --grace-period=0 --force
