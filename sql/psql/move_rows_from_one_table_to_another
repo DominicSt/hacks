@@ -1,0 +1,19 @@
+WITH moved_rows AS (
+    DELETE FROM <original_table> a
+    USING <other_table> b
+    WHERE <condition>
+    RETURNING a.* -- or specify columns
+)
+INSERT INTO <existing_table> --specify columns if necessary
+SELECT [DISTINCT] * FROM moved_rows;
+
+CREATE TABLE <new_table> AS
+WITH moved_rows AS (
+    DELETE FROM <original_table> a
+    USING <other_table> b
+    WHERE <condition>
+    RETURNING a.* -- or specify columns
+)
+SELECT [DISTINCT] * FROM moved_rows;
+
+CREATE TABLE xxx AS DELETE FROM yyy
