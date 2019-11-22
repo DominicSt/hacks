@@ -1,0 +1,5 @@
+\l - List all databases
+\c <db name> - Connect to database
+\dt - List tables in database
+
+\d+ <table name> - Describe DB
