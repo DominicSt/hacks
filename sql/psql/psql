@@ -1,5 +1,13 @@
+# ---------------
+# Common Commands
+# ---------------
+
 \l - List all databases
 \c <db name> - Connect to database
 \dt - List tables in database
-
+\dn - List schemas
 \d+ <table name> - Describe DB
+
+# -------
+# pg_dump
+# -------
