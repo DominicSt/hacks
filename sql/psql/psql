@@ -11,3 +11,9 @@
 # -------
 # pg_dump
 # -------
+
+# ------------
+# Create stuff
+# ------------
+
+CREATE SCHEMA IF NOT EXISTS myschema;
