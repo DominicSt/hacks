@@ -1,7 +1,38 @@
-https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+# Kubectl
 
-# Restart pod
-# Restart by deleting pod
+## Introduction
+Common commands and code snippets for kubectl. The most useful source is the official cheatsheet: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
+## Commands
+
+### Restarting pods:
+
+####Restart by deleting pod 
+
+```
 kubectl delete pods <pod> 
 kubectl delete pods <pod> --grace-period=0 --force
+```
+
+### Executing commands on pods:
+
+#### Execute a single command
+#### Exec onto a pod
+
+## Code snippets
+
+### Curl an endpoint on a pod:
+
+Gets a list of pods then filters and grabs the first result, then curls endpoint on the pod and returns the payload
+```                                                                                                                                                                                                                                                                            SIG(127) ↵  11028  13:19:17
+env=$1
+
+# Get a single pod to curl from
+pod=$(kubectl -n $env get pods | grep {{ FILTER }} -m 1 | awk '{print $1}')
+echo "Using pod: $pod"
+
+# Curl end point
+payload=$(kubectl -n $env exec $pod -- sh -c "curl -k {{ ENDPOINT }}  -H 'Content-type: application/json'")
+echo "Payload:\n$payload"
+
+```
