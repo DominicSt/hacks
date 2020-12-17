@@ -1,1 +1,4 @@
 
+# Kill local docker containers:
+
+docker kill $(docker ps -q)
