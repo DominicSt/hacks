@@ -1,3 +1,9 @@
+# Test AWS credentials
+
+aws sts get-caller-identity
+
+
+
 # Restore from snapshot
 
 srcenv={ ENV }
